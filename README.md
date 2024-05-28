@@ -2,7 +2,7 @@
 
 This repository provides a script to set up Zabbix using Docker containers. The script initializes the necessary containers and configures Zabbix to work with MySQL.
 
-![Zabbix Setup](images/Capture d’écran du 2024-05-28 09-30-12.png)
+![Zabbix Setup](images/zabbix_setup.png)
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ This repository provides a script to set up Zabbix using Docker containers. The 
     - Username: `Admin`
     - Password: `zabbix`
 
-![Zabbix Dashboard](images/Capture d’écran du 2024-05-27 18-04-04.png)
+![Zabbix Dashboard](images/zabbix_dashboard.png)
 
 ## Configuration
 
