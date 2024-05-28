@@ -1,0 +1,65 @@
+version: '3.7'
+
+services:
+  mysql-server:
+    image: mysql:5.7
+    container_name: mysql-server
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: password
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - zabbix-network
+
+  zabbix-server:
+    image: zabbix/zabbix-server-mysql:latest
+    container_name: zabbix-server
+    environment:
+      DB_SERVER_HOST: mysql-server
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: password
+    depends_on:
+      - mysql-server
+    ports:
+      - "10051:10051"
+    networks:
+      - zabbix-network
+
+  zabbix-web-nginx:
+    image: zabbix/zabbix-web-nginx-mysql:latest
+    container_name: zabbix-web-nginx
+    environment:
+      DB_SERVER_HOST: mysql-server
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: password
+    depends_on:
+      - zabbix-server
+    ports:
+      - "8080:8080"
+    networks:
+      - zabbix-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./certs:/etc/nginx/certs
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - zabbix-web-nginx
+    networks:
+      - zabbix-network
+
+volumes:
+  mysql-data:
+
+networks:
+  zabbix-network:
