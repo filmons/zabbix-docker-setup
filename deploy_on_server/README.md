@@ -1,4 +1,3 @@
-Sure, here is an updated `README.md` file that includes detailed steps to run the script on a VPS. This README will guide users through setting up Zabbix using Docker containers, configuring a domain name, and securing the setup with SSL.
 
 ### README.md
 
